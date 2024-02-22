@@ -1,0 +1,12 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url("../Assets/Job.jpg");
+    background-size: cover;
+    height: 100vh; 
+    display: flex;
+    margin-top: -180px;
+    justify-content: center;
+    align-items: center;
+  }
+  

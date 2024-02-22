@@ -1,0 +1,18 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url("../Assets/Job.jpg");
+    background-size: cover;
+    height: 100vh; 
+    display: flex;
+    margin-top: -170px;
+    justify-content: center;
+    align-items: center;
+  }
+  .typo{
+    color: red;
+    font-family: 'Bungee Spice', sans-serif;
+  }
