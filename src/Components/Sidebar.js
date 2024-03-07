@@ -1,33 +1,30 @@
+import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {NavLink} from 'react-router-dom';
-
+import { NavLink } from 'react-router-dom';
 
 function Sidebar() {
   return (
     <>
-    
-      <Navbar bg="dark" data-bs-theme="dark" fixed="top" >
-        <Container>
-          <Navbar.Brand><h2>Job Board</h2></Navbar.Brand>
-          <Nav  className="navbar" >
-            <Nav.Link as={NavLink} to="/"><h4>Home</h4></Nav.Link>
-            <Nav.Link as={NavLink} to='/postjob'><h4>Post a Job</h4></Nav.Link>
-            <Nav.Link as={NavLink} to='/jobdet'><h4>Job details</h4></Nav.Link>
-            <Nav.Link as={NavLink} to='/joblist'><h4>Job List</h4></Nav.Link>
-            <Nav.Link as={NavLink} to='/help'><h4>Help</h4></Nav.Link>
-            <Nav.Link style={{color:"blue"}} as={NavLink} to="/login" ><h6>Login</h6></Nav.Link>
-            <Nav.Link><h4>|</h4></Nav.Link>
-            <Nav.Link style={{color:"blue"}} as={NavLink} to="/signup"><h6>Signup</h6></Nav.Link>
+      <Navbar bg="dark" variant="dark" fixed="top">
+        <Container >
+          <Navbar.Brand>Job Board</Navbar.Brand>
+          <Nav className="ml-auto">
+            <Nav.Link as={NavLink} to="/" className="nav-link">Home</Nav.Link>
+            <Nav.Link as={NavLink} to="/postjob" className="nav-link">Post a Job</Nav.Link>
+            <Nav.Link as={NavLink} to="/jobdet" className="nav-link">Job Details</Nav.Link>
+            <Nav.Link as={NavLink} to="/joblist" className="nav-link">Job List</Nav.Link>
+            <Nav.Link as={NavLink} to="/help" className="nav-link">Help</Nav.Link>
+            <Nav.Link  style={{color:"blue"}}as={NavLink} to="/login" className="nav-link">Login</Nav.Link>
+           <NavLink style={{color:"white"}}> <h4>|</h4></NavLink>
+            <Nav.Link style={{color:"blue"}} as={NavLink} to="/signup" className="nav-link">Signup</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
       <br />
-
-      </>
-      
+    </>
   );
 }
 

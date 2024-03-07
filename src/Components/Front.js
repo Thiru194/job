@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import '../Components/home.css';
+import '../Components/home.css'; // Import the styles.css file
 
 const Front = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -43,16 +43,22 @@ const Front = () => {
   };
 
   return (
-    <div className='typo'>
-      <h1>There are 450+ job Offerings </h1>
-      <Form.Group controlId="formFileDisabled" className="mb-5">
-        <Form.Label style={{ marginLeft: "260px" }}>Update your Resume</Form.Label>
-        <Form.Control type="file" onChange={handleFileChange} />
-      </Form.Group>
-      <Button variant="outline-dark" style={{ marginLeft: '300px', width: "100px" }} onClick={handleFileUpload}>
-        Update
-      </Button>
-      <ToastContainer autoClose={3000} />
+    <div className='background-container'>
+      <div className='typo d-flex flex-column justify-content-between align-items-center'>
+        <div className='text-center mb-4'>
+          <h1>There are 450+ job Offerings</h1>
+          <Form.Group controlId="formFileDisabled">
+            <Form.Label>Update your Resume</Form.Label>
+            <Form.Control type="file" onChange={handleFileChange} />
+          </Form.Group>
+        </div>
+        <div>
+          <Button variant="outline-dark" className="mb-4" onClick={handleFileUpload}>
+            Update
+          </Button>
+          <ToastContainer autoClose={3000} />
+        </div>
+      </div>
     </div>
   );
 };
