@@ -9,6 +9,7 @@ import Sidebar from './Sidebar';
 
 export const Joblist = () => {
   const [data, setData] = useState([]);
+  const [role, setRole] = useState('user'); // Assuming role state is managed elsewhere
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,6 +26,14 @@ export const Joblist = () => {
 
   const handleDelete = async (id) => {
     try {
+      if (role === 'user') {
+        // Notify user that they don't have permission to delete
+        toast.error('You do not have permission to delete.', {
+          position: 'top-center',
+        });
+        return;
+      }
+
       const response = await axios.delete(`http://localhost:3002/delete/${id}`);
 
       console.log('Delete response:', response);
@@ -34,8 +43,7 @@ export const Joblist = () => {
           position: 'top-center',
         });
 
-       
-       setData((prevData) => prevData.filter((item) => item._id !== id));
+        setData((prevData) => prevData.filter((item) => item._id !== id));
       } else {
         toast.error('Error deleting task');
       }
@@ -48,43 +56,46 @@ export const Joblist = () => {
   return (
     <div>
       <Sidebar />
-      <Table striped bordered hover variant="dark" style={{ marginTop: '400px', width: '1000px' }}>
-        <thead>
-          <tr>
-            <th style={{ textAlign: 'center' }}>Company Name</th>
-            <th style={{ textAlign: 'center' }}>Job Position</th>
-            <th style={{ textAlign: 'center' }}>Salary</th>
-            <th style={{ textAlign: 'center' }}>Mail ID</th>
-            <th style={{ textAlign: 'center' }}>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((item) => (
-            <tr key={item._id}>
-              <td style={{ textAlign: 'center' }}>{item.companyname}</td>
-              <td style={{ textAlign: 'center' }}>{item.aboutjob}</td>
-              <td style={{ textAlign: 'center' }}>{item.salary}</td>
-              <td style={{ textAlign: 'center' }}>{item.mail}</td>
-              <td>
-                <Link to="/details">
-                  <Button
-                    variant="outline-info"
-                    style={{ marginRight: '10px', textAlign: 'center', marginLeft: '70px' }}
-                  >
-                    Apply
-                  </Button>
-                </Link>
-                <Button
-                  variant="outline-danger"
-                  onClick={() => handleDelete(item._id)}
-                >
-                 Delete
-                </Button>
-              </td>
+      <div className="table-responsive">
+        <Table striped bordered hover variant="light" style={{ width: '100%', marginTop: '30px' }}>
+          <thead>
+            <tr>
+              <th style={{ textAlign: 'center' }}>Company Name</th>
+              <th style={{ textAlign: 'center' }}>Job Position</th>
+              <th style={{ textAlign: 'center' }}>Salary</th>
+              <th style={{ textAlign: 'center' }}>Mail ID</th>
+              <th style={{ textAlign: 'center' }}>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {data.map((item) => (
+              <tr key={item._id}>
+                <td style={{ textAlign: 'center' }}>{item.companyname}</td>
+                <td style={{ textAlign: 'center' }}>{item.aboutjob}</td>
+                <td style={{ textAlign: 'center' }}>{item.salary}</td>
+                <td style={{ textAlign: 'center' }}>{item.mail}</td>
+                <td>
+                  <Link to="/details">
+                    <Button
+                      variant="outline-info"
+                      style={{ marginRight: '10px', textAlign: 'center', marginLeft: '70px' }}
+                    >
+                      Apply
+                    </Button>
+                  </Link>
+                  <Button
+                    variant="outline-danger"
+                    onClick={() => handleDelete(item._id)}
+                    disabled={role === 'user'} // Disable delete button for users
+                  >
+                   Delete
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
       <ToastContainer autoClose={1000} />
     </div>
   );

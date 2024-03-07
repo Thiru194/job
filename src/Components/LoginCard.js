@@ -1,40 +1,45 @@
+// Login.js
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
-import Spinner from 'react-bootstrap/Spinner';
-import axios from 'axios'; 
-import '../Components/LoginCard.css';
-import Sidebar from './Sidebar';
+import { Button, Card, Form, Spinner } from 'react-bootstrap';
+import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Link } from 'react-router-dom';
+import Sidebar from './Sidebar';
 
-const LoginCard = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const Login = () => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    role: '', // Adding role state
+  });
+
   const [formErrors, setFormErrors] = useState({
     email: '',
     password: '',
   });
+
   const [loading, setLoading] = useState(false);
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-    setFormErrors({ ...formErrors, email: '' });
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-    setFormErrors({ ...formErrors, password: '' });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+    setFormErrors({
+      ...formErrors,
+      [name]: '',
+    });
   };
 
   const handleLoginClick = async () => {
     const newFormErrors = {};
-    if (!email) {
+
+    if (!formData.email) {
       newFormErrors.email = 'Email is required';
     }
-    if (!password) {
+
+    if (!formData.password) {
       newFormErrors.password = 'Password is required';
     }
 
@@ -44,8 +49,13 @@ const LoginCard = () => {
       setLoading(true);
 
       try {
-        // Make API call to the login endpoint
-        const response = await axios.post('http://localhost:3002/login', { email, password });
+        const response = await axios.post('http://localhost:3002/login', {
+          email: formData.email,
+          password: formData.password,
+          role: formData.role,
+        });
+
+        setLoading(false);
 
         if (response.data.message === 'Login successful') {
           toast.success('Login successful', {
@@ -58,77 +68,93 @@ const LoginCard = () => {
           });
         }
       } catch (error) {
-        console.error('Error during login:', error.message);
-        toast.error('Invalid Password', {
-          position: toast.POSITION.TOP_CENTER,
-        });
-      } finally {
         setLoading(false);
+        toast.error('Error during login');
+        console.error('Error during login:', error);
       }
     }
   };
 
   return (
-    <div className='Card'>
+    <div>
       <Sidebar />
-      <Card style={{ width: '18rem',marginTop:"30px" }}>
-        <Card.Body>
-          <Card.Title style={{ textAlign: 'center', color: 'blue' }}>Login</Card.Title>
-          <Card.Text>
+      <div className="container mt-4">
+        <Card className="mx-auto" style={{ maxWidth: '400px', backgroundColor: "ButtonFace" }}>
+          <Card.Body>
+            <Card.Title className="text-center">Login</Card.Title>
             <Form>
-              <Form.Group className="mb-3">
+              <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
                   type="email"
-                  placeholder="name@example.com"
-                  value={email}
-                  onChange={handleEmailChange}
+                  placeholder="Enter email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  isInvalid={!!formErrors.email}
                 />
-                <Form.Text className="text-danger">{formErrors.email}</Form.Text>
+                <Form.Control.Feedback type="invalid">
+                  {formErrors.email}
+                </Form.Control.Feedback>
               </Form.Group>
-              <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+
+              <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
-                  type='password'
-                  placeholder='********'
-                  value={password}
-                  onChange={handlePasswordChange}
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  isInvalid={!!formErrors.password}
                 />
-                <Form.Text className="text-danger">{formErrors.password}</Form.Text>
+                <Form.Control.Feedback type="invalid">
+                  {formErrors.password}
+                </Form.Control.Feedback>
               </Form.Group>
-              <Form.Group className="mb-3">
-  <Form.Label>Select Role</Form.Label>
-  <div>
-    <Form.Check
-      inline
-      type="radio"
-      label="Admin"
-      name="role"
-      id="adminRadio"
-      // You can add onChange handler for radio button if needed
-    />
-    <Form.Check
-      inline
-      type="radio"
-      label="User"
-      name="role"
-      id="userRadio"
-      // You can add onChange handler for radio button if needed
-    />
-  </div>
-</Form.Group>
-             
+
+              <Form.Group controlId="formUserRole">
+                <Form.Label>Select Role</Form.Label>
+                <div>
+                  <Form.Check
+                    inline
+                    type="radio"
+                    label="Admin"
+                    name="role"
+                    id="adminRadioLogin"
+                    value="admin"
+                    onChange={handleInputChange}
+                  />
+                  <Form.Check
+                    inline
+                    type="radio"
+                    label="User"
+                    name="role"
+                    id="userRadioLogin"
+                    value="user"
+                    onChange={handleInputChange}
+                  />
+                </div>
+              </Form.Group>
+
+              <Button
+                variant="primary"
+                type="button"
+                onClick={handleLoginClick}
+                disabled={loading}
+                className="d-flex justify-content-center"
+                block
+                style={{ marginLeft: "140px", marginTop: "30px" }}
+              >
+                {loading ? <Spinner animation="border" size="sm" /> : 'Login'}
+              </Button>
             </Form>
-            <Button variant="outline-primary" onClick={handleLoginClick} style={{ marginLeft: "100px", marginTop: "" }}>
-              {loading ? <Spinner animation="border" variant="primary" size="sm" /> : 'Login'}
-            </Button>
-            <Link to={'/forgotpassword'}><h6 style={{textAlign:"center",marginTop:"10px",marginLeft:"15px"}}>Forget Password</h6></Link>
-          </Card.Text>
-        </Card.Body>
-      </Card>
-      <ToastContainer autoClose={1500} />
+          </Card.Body>
+        </Card>
+      </div>
+      <ToastContainer autoClose={500} />
     </div>
   );
 };
 
-export default LoginCard;
+export default Login;

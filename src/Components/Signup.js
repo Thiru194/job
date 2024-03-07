@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import Sidebar from './Sidebar';
+import { Button, Card, Form, Spinner } from 'react-bootstrap';
+import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Spinner from 'react-bootstrap/Spinner';
-import axios from 'axios';
+import Sidebar from './Sidebar';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     confirmPassword: '',
+    role: '', // Adding role state
   });
 
   const [formErrors, setFormErrors] = useState({
@@ -49,9 +47,10 @@ const Signup = () => {
     if (formData.password !== formData.confirmPassword) {
       newFormErrors.confirmPassword = 'Passwords do not match';
     }
-    // if (!formData.role) {
-    //   newFormErrors.role = 'Please select a role';
-    // }
+
+    if (!formData.role) {
+      newFormErrors.role = 'Please select a role';
+    }
 
     if (Object.keys(newFormErrors).length > 0) {
       setFormErrors(newFormErrors);
@@ -62,6 +61,7 @@ const Signup = () => {
         const response = await axios.post('http://localhost:3002/signup', {
           email: formData.email,
           password: formData.password,
+          role: formData.role,
         });
 
         setLoading(false);
@@ -78,77 +78,103 @@ const Signup = () => {
   };
 
   return (
-    <div className='box'>
-      <div className='Card'>
-        <Sidebar />
-        <Card style={{ width: '18rem',marginTop:"60px"}}>
+    <div>
+      <Sidebar />
+      <div className="container mt-4">
+        <Card className="mx-auto" style={{ maxWidth: '400px',backgroundColor:"ButtonFace" }}>
           <Card.Body>
-            <Card.Title style={{ textAlign: 'center', color: 'green' }}>Signup</Card.Title>
-            <Card.Text>
-              <Form>
-                <Form.Group className="mb-3">
-                  <Form.Label>Email address</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="name@example.com"
-                    name="email"
-                    value={formData.email}
+            <Card.Title className="text-center">Signup</Card.Title>
+            <Form>
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  isInvalid={!!formErrors.email}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {formErrors.email}
+                </Form.Control.Feedback>
+              </Form.Group>
+
+              <Form.Group controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  isInvalid={!!formErrors.password}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {formErrors.password}
+                </Form.Control.Feedback>
+              </Form.Group>
+
+              <Form.Group controlId="formBasicConfirmPassword">
+                <Form.Label>Confirm Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Confirm Password"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleInputChange}
+                  isInvalid={!!formErrors.confirmPassword}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {formErrors.confirmPassword}
+                </Form.Control.Feedback>
+              </Form.Group>
+
+              <Form.Group controlId="formUserRole">
+                <Form.Label>Select Role</Form.Label>
+                <div>
+                  <Form.Check
+                    inline
+                    type="radio"
+                    label="Admin"
+                    name="role"
+                    id="adminRadio"
+                    value="admin"
                     onChange={handleInputChange}
+                    isInvalid={!!formErrors.role}
                   />
-                  <Form.Text className="text-danger">{formErrors.email}</Form.Text>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type='password'
-                    placeholder='********'
-                    name="password"
-                    value={formData.password}
+                  <Form.Check
+                    inline
+                    type="radio"
+                    label="User"
+                    name="role"
+                    id="userRadio"
+                    value="user"
                     onChange={handleInputChange}
+                    isInvalid={!!formErrors.role}
                   />
-                  <Form.Text className="text-danger">{formErrors.password}</Form.Text>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea2">
-                  <Form.Label>Confirm Password</Form.Label>
-                  <Form.Control
-                    type='password'
-                    placeholder='********'
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleInputChange}
-                  />
-                  <Form.Text className="text-danger">{formErrors.confirmPassword}</Form.Text>
-                </Form.Group>
-                <Form.Group className="mb-3">
-  <Form.Label>Select Role</Form.Label>
-  <div>
-    <Form.Check
-      inline
-      type="radio"
-      label="Admin"
-      name="role"
-      id="adminRadio"
-      // You can add onChange handler for radio button if needed
-    />
-    <Form.Check
-      inline
-      type="radio"
-      label="User"
-      name="role"
-      id="userRadio"
-      // You can add onChange handler for radio button if needed
-    />
-  </div>
-</Form.Group>
-              </Form>
-              <Button variant="outline-success" style={{ marginLeft: '90px' }} onClick={handleSignupClick}>
+                </div>
+                <Form.Control.Feedback type="invalid">
+                  {formErrors.role}
+                </Form.Control.Feedback>
+              </Form.Group>
+
+              <Button
+                variant="success"
+                type="button"
+                onClick={handleSignupClick}
+                disabled={loading}
+                className="d-flex justify-content-center"
+                block
+                style={{marginLeft:"140px",marginTop:"30px"}}
+              >
                 {loading ? <Spinner animation="border" size="sm" /> : 'Signup'}
               </Button>
-            </Card.Text>
+            </Form>
           </Card.Body>
         </Card>
-        <ToastContainer autoClose={500} />
       </div>
+      <ToastContainer autoClose={500} />
     </div>
   );
 };
