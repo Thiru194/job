@@ -9,7 +9,6 @@ import Sidebar from './Sidebar';
 
 export const Joblist = () => {
   const [data, setData] = useState([]);
-  const [role, setRole] = useState('user'); // Assuming role state is managed elsewhere
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,7 +16,7 @@ export const Joblist = () => {
         const response = await axios.get('http://localhost:3002/getdata');
         console.log('Data fetched:', response.data);
         setData(response.data);
-      } catch (error){
+      } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
@@ -26,14 +25,6 @@ export const Joblist = () => {
 
   const handleDelete = async (id) => {
     try {
-      if (role === 'user') {
-        // Notify user that they don't have permission to delete
-        toast.error('You do not have permission to delete.', {
-          position: 'top-center',
-        });
-        return;
-      }
-
       const response = await axios.delete(`http://localhost:3002/delete/${id}`);
 
       console.log('Delete response:', response);
@@ -86,9 +77,8 @@ export const Joblist = () => {
                   <Button
                     variant="outline-danger"
                     onClick={() => handleDelete(item._id)}
-                     
                   >
-                   Delete
+                    Delete
                   </Button>
                 </td>
               </tr>
