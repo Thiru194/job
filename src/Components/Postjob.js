@@ -53,11 +53,11 @@ const Postjob = () => {
     <div className='background-container'>
       <Sidebar />
       <Container fluid>
-        <Row className='justify-content-center align-items-center' style={{ minHeight: '80vh' }}> 
+        <Row className='justify-content-center align-items-center' style={{ minHeight: '80vh',marginTop:"-400px" }}> 
           <Col md={9} lg={10} className='px-5 py-3' style={{ paddingTop: '40px' }}> 
             <h1 className='mt-4 text-center' >Post A Job</h1>
             <div className='post-container'>
-              <Form>
+              <Form >
                 <Row>
                   <Col md={6}>
                     <Form.Group controlId="companyName">

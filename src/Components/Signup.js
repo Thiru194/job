@@ -129,7 +129,6 @@ const Signup = () => {
                   {formErrors.confirmPassword}
                 </Form.Control.Feedback>
               </Form.Group>
-
               <Form.Group controlId="formUserRole">
                 <Form.Label>Select Role</Form.Label>
                 <div>

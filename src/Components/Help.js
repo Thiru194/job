@@ -20,14 +20,14 @@ function HelpPage() {
             <Row className="mb-4">
               <Col md={6} className="text-center">
                 <div className="icon">
-                  <FontAwesomeIcon icon={faEnvelope} size="3x" />
+                  <FontAwesomeIcon icon={faEnvelope} size="3x" style={{color:"blue"}} />
                 </div>
                 <h4>Email Support</h4>
                 <p>Contact us via email at <a href="thiruselvan0319@gmail.com">thiruselvan0319@gmail.com</a>.</p>
               </Col>
               <Col md={6} className="text-center">
                 <div className="icon">
-                  <FontAwesomeIcon icon={faPhone} size="3x" />
+                  <FontAwesomeIcon icon={faPhone} size="3x" style={{color:"blue"}}/>
                 </div>
                 <h4>Phone Support</h4>
                 <p>Call us at <a href="8838974963">8838974963</a>.</p>

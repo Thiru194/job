@@ -84,6 +84,22 @@ export const Jobdet = () => {
               <td>Technical issue resolution, user support, documentation.</td>
               <td>₹60,000 - ₹90,000</td>
             </tr>
+            <tr>
+              <td>9</td>
+              <td > Data Science Engineer</td>
+              <td >Assists users in resolving technical issues with software or hardware.</td>
+              <td>Strong troubleshooting and communication skills. Knowledge of support tools.</td>
+              <td>Technical issue resolution, user support, documentation.</td>
+              <td>₹60,000 - ₹90,000</td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td >Mechanical Engineer</td>
+              <td >Assists users in resolving technical issues with software or hardware.</td>
+              <td>Strong troubleshooting and communication skills. Knowledge of support tools.</td>
+              <td>Technical issue resolution, user support, documentation.</td>
+              <td>₹60,000 - ₹90,000</td>
+            </tr>
           </tbody>
         </Table>
       </div>

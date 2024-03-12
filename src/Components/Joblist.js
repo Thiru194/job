@@ -86,7 +86,7 @@ export const Joblist = () => {
                   <Button
                     variant="outline-danger"
                     onClick={() => handleDelete(item._id)}
-                    disabled={role === 'user'} // Disable delete button for users
+                     
                   >
                    Delete
                   </Button>
