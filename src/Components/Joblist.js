@@ -49,7 +49,7 @@ export const Joblist = () => {
       <Sidebar />
       <div className="table-responsive">
         <Table striped bordered hover variant="light" style={{ marginTop: '30px' }}>
-          <thead>
+          <thead className='text-center'>
             <tr>
               <th>Company Name</th>
               <th>Job Position</th>
@@ -58,7 +58,7 @@ export const Joblist = () => {
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className='text-center'>
             {data.map((item) => (
               <tr key={item._id}>
                 <td>{item.companyname}</td>
@@ -69,7 +69,7 @@ export const Joblist = () => {
                   <Row>
                     <Col xs={12} sm={6} className="mb-2 mb-sm-0">
                       <Link to="/details">
-                        <Button variant="outline-info" block>
+                        <Button variant="outline-info" block >
                           Apply
                         </Button>
                       </Link>
