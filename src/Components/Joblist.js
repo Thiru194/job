@@ -67,14 +67,14 @@ export const Joblist = () => {
                 <td>{item.mail}</td>
                 <td>
                   <Row>
-                    <Col xs={6} className="mb-2 mb-lg-0">
+                    <Col xs={12} sm={6} className="mb-2 mb-sm-0">
                       <Link to="/details">
                         <Button variant="outline-info" block>
                           Apply
                         </Button>
                       </Link>
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={12} sm={6}>
                       <Button variant="outline-danger" onClick={() => handleDelete(item._id)} block>
                         Delete
                       </Button>
