@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Table } from 'react-bootstrap';
+import { Button, Table, Col, Row } from 'react-bootstrap';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
@@ -48,38 +48,38 @@ export const Joblist = () => {
     <div>
       <Sidebar />
       <div className="table-responsive">
-        <Table striped bordered hover variant="light" style={{ width: '100%', marginTop: '30px' }}>
+        <Table striped bordered hover variant="light" style={{ marginTop: '30px' }}>
           <thead>
             <tr>
-              <th style={{ textAlign: 'center' }}>Company Name</th>
-              <th style={{ textAlign: 'center' }}>Job Position</th>
-              <th style={{ textAlign: 'center' }}>Salary</th>
-              <th style={{ textAlign: 'center' }}>Mail ID</th>
-              <th style={{ textAlign: 'center' }}>Actions</th>
+              <th>Company Name</th>
+              <th>Job Position</th>
+              <th>Salary</th>
+              <th>Mail ID</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {data.map((item) => (
               <tr key={item._id}>
-                <td style={{ textAlign: 'center' }}>{item.companyname}</td>
-                <td style={{ textAlign: 'center' }}>{item.aboutjob}</td>
-                <td style={{ textAlign: 'center' }}>{item.salary}</td>
-                <td style={{ textAlign: 'center' }}>{item.mail}</td>
+                <td>{item.companyname}</td>
+                <td>{item.aboutjob}</td>
+                <td>{item.salary}</td>
+                <td>{item.mail}</td>
                 <td>
-                  <Link to="/details">
-                    <Button
-                      variant="outline-info"
-                      style={{ marginRight: '10px', textAlign: 'center', marginLeft: '70px' }}
-                    >
-                      Apply
-                    </Button>
-                  </Link>
-                  <Button
-                    variant="outline-danger"
-                    onClick={() => handleDelete(item._id)}
-                  >
-                    Delete
-                  </Button>
+                  <Row>
+                    <Col xs={6} className="mb-2 mb-lg-0">
+                      <Link to="/details">
+                        <Button variant="outline-info" block>
+                          Apply
+                        </Button>
+                      </Link>
+                    </Col>
+                    <Col xs={6}>
+                      <Button variant="outline-danger" onClick={() => handleDelete(item._id)} block>
+                        Delete
+                      </Button>
+                    </Col>
+                  </Row>
                 </td>
               </tr>
             ))}

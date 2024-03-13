@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Table } from 'react-bootstrap';
 import Sidebar from './Sidebar';
@@ -8,7 +9,7 @@ export const Jobdet = () => {
     <div>
       <Sidebar />
       <div className="table-responsive">
-        <Table striped bordered hover variant='dark' style={{ width: "100%",marginTop:"30px" }}>
+        <Table striped bordered hover variant='dark' style={{ width: "100%", marginTop: "30px" }}>
           <thead>
             <tr>
               <th style={{ color: "palegreen" }}>S.no</th>
@@ -20,7 +21,7 @@ export const Jobdet = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
+          <tr>
               <td>1</td>
               <td>Software Engineer/Developer</td>
               <td>Develops software applications</td>
@@ -100,6 +101,7 @@ export const Jobdet = () => {
               <td>Technical issue resolution, user support, documentation.</td>
               <td>₹60,000 - ₹90,000</td>
             </tr>
+           
           </tbody>
         </Table>
       </div>
